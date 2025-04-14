@@ -1,95 +1,86 @@
-import ConnectDb from "@/lib/db";
-import User from "@/models/users";
+// pages/api/index.js
+import ConnectDb from "@/src/lib/db";
+import User from "@/src/models/users";
 
 const handler = async (req, res) => {
   await ConnectDb();
 
   switch (req.method) {
-    case 'GET': // دریافت تمام کاربران
+    case 'GET':
       try {
         const users = await User.find({})
-          .select('-password') // عدم نمایش پسورد
-          .sort({ createdAt: -1 }); // مرتب سازی بر اساس جدیدترین
-
+          .sort({ createdAt: -1 })
+          .lean();
         if (!users.length) {
           return res.status(200).json({ message: 'هنوز کاربری ثبت نشده است', data: [] });
         }
-
         return res.status(200).json({
           message: 'دریافت داده‌ها موفقیت آمیز بود',
           data: users,
-          count: users.length
+          count: users.length,
         });
-
       } catch (error) {
         console.error('خطا در دریافت کاربران:', error);
         return res.status(500).json({ error: 'خطای سرور داخلی' });
       }
-      break;
 
     case 'POST':
       try {
-        const { name, username, password } = req.body;
+        const {
+          first__name,
+          last__name,
+          postal_code,
+          resume,
+          date,
+          idType,
+          idNumber,
+          full_time_job,
+          part_time_job,
+        } = req.body;
 
-        if (!name || !username || !password) {
+        if (!first__name || !last__name || !postal_code || !resume || !date || !idType || !idNumber) {
           return res.status(400).json({ error: 'تمام فیلدها الزامی هستند' });
         }
 
         const newUser = await User.create({
-          name,
-          username,
-          password 
+          first__name,
+          last__name,
+          postal_code,
+          resume,
+          date,
+          idType,
+          idNumber,
+          full_time_job,
+          part_time_job,
         });
 
         return res.status(201).json({
           message: 'کاربر با موفقیت ایجاد شد',
-          user: {
-            id: newUser._id,
-            name: newUser.name,
-            username: newUser.username,
-          }
+          user: newUser,
         });
-
       } catch (error) {
         console.error('خطا در ایجاد کاربر:', error);
-
-        if (error.code === 11000) {
-          return res.status(409).json({ error: 'نام کاربری قبلا استفاده شده است' });
-        }
-
         return res.status(500).json({ error: 'خطای سرور داخلی' });
       }
-      break;
 
     case 'DELETE':
       try {
         const { id } = req.query;
-
-
         if (!id) {
           return res.status(400).json({ error: 'شناسه کاربر الزامی است' });
         }
-
         const deletedUser = await User.findByIdAndDelete(id);
-
         if (!deletedUser) {
           return res.status(404).json({ error: 'کاربر یافت نشد' });
         }
-
         return res.status(200).json({
           message: 'کاربر با موفقیت حذف شد',
-          user: {
-            id: deletedUser._id,
-            name: deletedUser.name,
-            username: deletedUser.username
-          }
+          user: deletedUser,
         });
-
       } catch (error) {
         console.error('خطا در حذف کاربر:', error);
         return res.status(500).json({ error: 'خطای سرور داخلی' });
       }
-      break;
 
     default:
       return res.status(405).json({ error: 'Method not allowed' });
