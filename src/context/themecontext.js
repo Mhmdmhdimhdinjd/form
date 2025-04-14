@@ -11,6 +11,7 @@ export const ThemeProvider = ({ children }) => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       setIsDark(savedTheme === 'dark');
+      // document.body.setAttribute('class', savedTheme);
     }
   }, []);
 
@@ -19,6 +20,7 @@ export const ThemeProvider = ({ children }) => {
     setIsDark((prev) => {
       const newTheme = !prev;
       localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+      // document.body.setAttribute('class', newTheme);
       return newTheme;
     });
   };

@@ -21,10 +21,17 @@ import {
     FaCog,
     FaLock,
 } from "react-icons/fa";
+import { useTheme } from '@/src/context/themecontext'
+
 
 const Sidebar = () => {
 
-    const [textcolor, settextcolor] = useState('text-dark')
+    const { isDark } = useTheme();
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleOffcanvas = () => setIsOpen(!isOpen);
+
+
+    const [textcolor, settextcolor] = useState(isDark ? 'text-white' : 'text-dark')
 
     const [open, setOpen] = useState('0');
     const toggle = (id) => {
@@ -35,10 +42,16 @@ const Sidebar = () => {
         }
     };
 
+    useEffect(() => {
+
+        settextcolor(isDark ? 'text-white' : 'text-dark')
+
+    }, [isDark]);
+
     return (
         <>
             <div
-                className={`ms-3 d-none d-sm-block shadow bg-white`}
+                className={`ms-3 d-none d-sm-block shadow ${isDark ? 'bg-dark' : 'bg-white'}`}
                 style={{
                     width: '250px',
                 }}

@@ -11,6 +11,8 @@ import useCreateUser from '@/src/hooks/useCreateUser';
 import useGetAllUsers from '@/src/hooks/useGetAllUsers';
 import { useTheme } from '@/src/context/themecontext';
 import { Button } from 'reactstrap';
+import Sidebar from '../components/template/aside';
+import Navbar__comp from '../components/template/navbar';
 
 const validationSchema = yup.object().shape({
   first__name: yup
@@ -106,14 +108,14 @@ export default function Home() {
   };
 
   return (
-    <div className="container-lg" data-bs-theme={isDark ? 'dark' : 'light'}>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1 className={isDark ? 'text-white' : ''}>فرم ثبت اطلاعات</h1>
-        <Button color="secondary" onClick={toggleTheme}>
-          تغییر تم به {isDark ? 'روشن' : 'تیره'}
-        </Button>
-      </div>
+    <div className="container-lg d-flex flex-row-reverse" data-bs-theme={isDark ? 'dark' : 'light'}>
+
+      <Sidebar />
+
       <div className="w-100">
+
+        <Navbar__comp />
+
         <div className={`p-3 shadow rounded ${isDark ? 'bg-dark' : 'bg-white'}`}>
           {isFetching && <p className={isDark ? 'text-white' : ''}>در حال بارگذاری داده‌ها...</p>}
           {isFetchError && (
