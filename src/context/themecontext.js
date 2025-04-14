@@ -5,28 +5,40 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   // لود تم از localStorage موقع بارگذاری
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       setIsDark(savedTheme === 'dark');
-      // document.body.setAttribute('class', savedTheme);
+      if (savedTheme === 'dark') {
+        document.body.style.backgroundColor = "#222"; // رنگ تیره برای دارک
+      } else {
+        document.body.style.backgroundColor = "#add8e6"; // آبی روشن برای لایت
+      }
     }
   }, []);
 
-  // ذخیره تم توی localStorage موقع تغییر
+
   const toggleTheme = () => {
     setIsDark((prev) => {
       const newTheme = !prev;
       localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-      // document.body.setAttribute('class', newTheme);
+      if (newTheme) {
+        document.body.style.backgroundColor = "#222"; // رنگ تیره برای دارک
+      } else {
+        document.body.style.backgroundColor = "#add8e6"; // آبی روشن برای لایت
+      }
       return newTheme;
     });
   };
 
+  const toggleOffcanvas = () => setIsOpen(!isOpen);
+
+
   return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme }}>
+    <ThemeContext.Provider value={{ isDark, toggleTheme,toggleOffcanvas , isOpen }}>
       {children}
     </ThemeContext.Provider>
   );

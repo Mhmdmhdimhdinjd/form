@@ -26,9 +26,7 @@ import { useTheme } from '@/src/context/themecontext'
 
 const Sidebar = () => {
 
-    const { isDark } = useTheme();
-    const [isOpen, setIsOpen] = useState(false);
-    const toggleOffcanvas = () => setIsOpen(!isOpen);
+    const { isDark ,isOpen, toggleOffcanvas} = useTheme();
 
 
     const [textcolor, settextcolor] = useState(isDark ? 'text-white' : 'text-dark')

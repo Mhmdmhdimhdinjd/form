@@ -2,7 +2,6 @@ import React , {useState} from "react";
 import { Navbar, Nav, NavItem, Input, InputGroupText, InputGroup, NavbarText } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { RxMoon } from "react-icons/rx";
-import logo from '@/src/assets/image/برنج نی نی 2.jpg';
 import { HiOutlineBell, HiOutlineSearch } from "react-icons/hi";
 import { TbApps } from "react-icons/tb";
 import { RiTranslate2 } from "react-icons/ri";
@@ -10,11 +9,7 @@ import { useTheme } from '@/src/context/themecontext';
 import { CiMenuFries } from "react-icons/ci";
 
 const Navbar__comp = () => {
-  const { isDark, toggleTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleOffcanvas = () => setIsOpen(!isOpen);
-
+  const { isDark, toggleTheme , toggleOffcanvas } = useTheme();
 
   const toggleDarkMode = () => {
     toggleTheme()
@@ -31,7 +26,7 @@ const Navbar__comp = () => {
               borderRadius: "50%",
               objectFit: "cover",
             }}
-            src={'@/src/assets/image/برنج نی نی 2.jpg'}
+            src={'https://mhmdmhdimhdinjd.github.io/AdvancedForm/assets/%D8%A8%D8%B1%D9%86%D8%AC%20%D9%86%DB%8C%20%D9%86%DB%8C%202-DRoyfaGZ.jpg'}
             alt=""
           />
           <span className="status-indicator"></span>

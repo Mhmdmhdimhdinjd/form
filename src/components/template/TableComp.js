@@ -139,7 +139,7 @@ const TableComp = ({ data }) => {
   }
 
   return (
-    <div dir="rtl">
+    <div className="responsive-table-container" dir="rtl">
       <Table dark={isDark} striped bordered hover className="mt-4">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
